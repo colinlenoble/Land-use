@@ -1,0 +1,283 @@
+---
+title: Compound Events and Land Use Changes
+format: clean-revealjs
+html-math-method:
+    method: mathjax 
+    url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+author:
+    - name: Colin Lenoble
+      orcid: 0009-0000-6409-7196
+      email: colin.lenoble@universite-paris-saclay.fr
+      affiliations: CIRED
+date: last-modified
+jupyter-kernel: 'C:/Users/colin/anaconda3/envs/xarray_env/python.exe'
+---
+
+# Introduction
+
+## PhD Context
+
+- **PhD**: Evaluation of different adaptation policies-mixes to cope with compound extreme climate events in Europe
+- Begin: **October 2024**
+- Until now: one work in progress paper on **Renewable Energy Shortages**. It is more a climatology paper, I didn't make any economic analyses in it.
+
+## Research Questions
+ 
+1. How do land use changes affect the magnitude and frequency of compound events ?
+2. How do compound extreme events change the land use by affecting the housing market or the agricultural sector ?
+3. How do these interactions affect the economic and social vulnerability of the population ?
+
+## Why study land-use changes ?
+
+- Policies on land use management are crucial and more policy-relevant than structural changes or migration policies.
+
+![New buildings andclimate vulnerability in the US from *Urban Policy and Spatial Exposure to Environmental Risk* by *Ospital, Augusto* (2023)](images/new_houses_climate_risk.png)
+
+## Motivation in France
+
+![Loss of natural areas per km² in France from 2010 to 2020 according to the number of natural hazard declared per km²](images/loss_natural_areas.png)
+
+
+## Graphical Abstract
+
+```{python}
+#| label: fig-polar
+#| fig-cap: "Scheme of the article"
+
+
+import matplotlib.pyplot as plt
+import networkx as nx
+
+# Initialize the graph
+G = nx.DiGraph(vmin=0, vmax=1)
+
+# Add nodes
+nodes = {
+    "Anthropogenic\nactivity": (-1, 0),
+    "Hydro-climatic drivers:\n\nTemperature\nPrecipitation": (0.5, 1),
+    "Stressors:\n\nWilfire Risk\nDroughts\nHeatwaves": (2, 0),
+    "Land-use Changes": (0.5, -1),
+    "Impacts:\n\nFatalities\nEconomic Losses": (4, 0),
+}
+
+# Add edges
+edges = [
+    ("Anthropogenic\nactivity", 
+    "Hydro-climatic drivers:\n\nTemperature\nPrecipitation"),
+    ("Hydro-climatic drivers:\n\nTemperature\nPrecipitation", "Stressors:\n\nWilfire Risk\nDroughts\nHeatwaves"),
+    ("Stressors:\n\nWilfire Risk\nDroughts\nHeatwaves", "Impacts:\n\nFatalities\nEconomic Losses"),
+    ("Anthropogenic\nactivity", "Land-use Changes"),
+    ("Land-use Changes", "Stressors:\n\nWilfire Risk\nDroughts\nHeatwaves"),
+    ("Impacts:\n\nFatalities\nEconomic Losses", "Land-use Changes")
+]
+
+# Add nodes and edges to the graph
+for node, pos in nodes.items():
+    G.add_node(node, pos=pos)
+G.add_edges_from(edges)
+
+colors_nodes = ['red', 'lightblue', 'lightgreen', 'orange', 'pink']
+colors_edges = ['black', 'black', 'black', 'black', 'black', 'black']
+alpha_edges = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+# Extract positions
+positions = nx.get_node_attributes(G, 'pos')
+
+
+# Draw the graph
+plt.figure(figsize=(9,7))
+nx.draw_networkx_nodes(G, positions, node_size=4000, node_color=colors_nodes, node_shape='o', edgecolors='white', linewidths=1.5, alpha=0.8)
+nx.draw_networkx_edges(G, positions, arrows=True,arrowstyle='-|>', arrowsize=10, edge_color=colors_edges, width=1, node_size=4000, node_shape='o', alpha=alpha_edges)
+
+nx.draw_networkx_labels(G, positions, font_size=7, font_color='black', font_weight='bold')
+
+# Display
+#plt.title("Energy Demand and Impact Flowchart")
+plt.axis('off')
+plt.show()
+
+```
+
+
+## Climate-centered approach
+```{python}
+#| fig-cap: "Scheme of the Extreme Events Attribution Methodology from *Broadening the scope of anthropogenic influence in extreme event attribution* by *Jézéquel et al* (2023)"
+
+import matplotlib.pyplot as plt
+import networkx as nx
+
+# Initialize the graph
+G = nx.DiGraph(vmin=0, vmax=1)
+
+# Add nodes
+nodes = {
+    "Anthropogenic\nactivity": (-1, 0),
+    "Hydro-climatic drivers:\n\nTemperature\nPrecipitation": (0.5, 1),
+    "Stressors:\n\nWilfire Risk\nDroughts\nHeatwaves": (2, 0),
+    "Land-use Changes": (0.5, -1),
+    "Impacts:\n\nFatalities\nEconomic Losses": (4, 0),
+}
+
+# Add edges
+edges = [
+    ("Anthropogenic\nactivity", 
+    "Hydro-climatic drivers:\n\nTemperature\nPrecipitation"),
+    ("Anthropogenic\nactivity", "Land-use Changes"),
+    ("Hydro-climatic drivers:\n\nTemperature\nPrecipitation", "Stressors:\n\nWilfire Risk\nDroughts\nHeatwaves"),
+    ("Stressors:\n\nWilfire Risk\nDroughts\nHeatwaves", "Impacts:\n\nFatalities\nEconomic Losses"),
+    
+    ("Land-use Changes", "Stressors:\n\nWilfire Risk\nDroughts\nHeatwaves"),
+    ("Impacts:\n\nFatalities\nEconomic Losses", "Land-use Changes")
+]
+
+# Add nodes and edges to the graph
+for node, pos in nodes.items():
+    G.add_node(node, pos=pos)
+G.add_edges_from(edges)
+
+colors_nodes = ['red', 'lightblue', 'lightgreen', 'orange', 'pink']
+colors_edges = ['black', 'black', 'black', 'black', 'black', 'black']
+alpha_edges = [0.5, 0.1,0.5,0.5,0.1,0.1]
+label_edges = ['', '', '', '', '', '']
+
+# Extract positions
+positions = nx.get_node_attributes(G, 'pos')
+
+
+# Draw the graph
+plt.figure(figsize=(9,7))
+nx.draw_networkx_nodes(G, positions, node_size=4000, node_color=colors_nodes, node_shape='o', edgecolors='white', linewidths=1.5, alpha=0.8)
+nx.draw_networkx_edges(G, positions, arrows=True,arrowstyle='-|>', arrowsize=10, edge_color=colors_edges, width=1, node_size=4000, node_shape='o', alpha=alpha_edges)
+nx.draw_networkx_edge_labels(G, positions, edge_labels={(edges[i][0], edges[i][1]): label_edges[i] for i in range(len(edges))}, font_size=7)
+nx.draw_networkx_labels(G, positions, font_size=7, font_color='black', font_weight='bold')
+
+# Display
+#plt.title("Energy Demand and Impact Flowchart")
+plt.axis('off')
+plt.show()
+
+```
+
+
+# 1. How do land use changes affect the magnitude and frequency of compound events ?
+
+## Historical perspective
+```{python}
+#| fig-cap: "Scheme of the Extreme Events Attribution Methodology from *Broadening the scope of anthropogenic influence in extreme event attribution* by *Jézéquel et al* (2023)"
+
+import matplotlib.pyplot as plt
+import networkx as nx
+
+# Initialize the graph
+G = nx.DiGraph(vmin=0, vmax=1)
+
+# Add nodes
+nodes = {
+    "Anthropogenic\nactivity": (-1, 0),
+    "Hydro-climatic drivers:\n\nTemperature\nPrecipitation": (0.5, 1),
+    "Stressors:\n\nWilfire Risk\nDroughts\nHeatwaves": (2, 0),
+    "Land-use Changes": (0.5, -1),
+    "Impacts:\n\nFatalities\nEconomic Losses": (4, 0),
+}
+
+# Add edges
+edges = [
+    ("Anthropogenic\nactivity", 
+    "Hydro-climatic drivers:\n\nTemperature\nPrecipitation"),
+    ("Anthropogenic\nactivity", "Land-use Changes"),
+    ("Hydro-climatic drivers:\n\nTemperature\nPrecipitation", "Stressors:\n\nWilfire Risk\nDroughts\nHeatwaves"),
+    ("Stressors:\n\nWilfire Risk\nDroughts\nHeatwaves", "Impacts:\n\nFatalities\nEconomic Losses"),
+    
+    ("Land-use Changes", "Stressors:\n\nWilfire Risk\nDroughts\nHeatwaves"),
+    ("Impacts:\n\nFatalities\nEconomic Losses", "Land-use Changes")
+]
+
+# Add nodes and edges to the graph
+for node, pos in nodes.items():
+    G.add_node(node, pos=pos)
+G.add_edges_from(edges)
+
+colors_nodes = ['red', 'lightblue', 'lightgreen', 'orange', 'pink']
+colors_edges = ['black', 'black', 'black', 'black', 'black', 'black']
+alpha_edges = [0.5, 0.5,0.5,0.5,0.5,0.1]
+label_edges = ['', '', '', '', '', '']
+
+# Extract positions
+positions = nx.get_node_attributes(G, 'pos')
+
+
+# Draw the graph
+plt.figure(figsize=(9,7))
+nx.draw_networkx_nodes(G, positions, node_size=4000, node_color=colors_nodes, node_shape='o', edgecolors='white', linewidths=1.5, alpha=0.8)
+nx.draw_networkx_edges(G, positions, arrows=True,arrowstyle='-|>', arrowsize=10, edge_color=colors_edges, width=1, node_size=4000, node_shape='o', alpha=alpha_edges)
+nx.draw_networkx_edge_labels(G, positions, edge_labels={(edges[i][0], edges[i][1]): label_edges[i] for i in range(len(edges))}, font_size=7)
+nx.draw_networkx_labels(G, positions, font_size=7, font_color='black', font_weight='bold')
+
+# Display
+#plt.title("Energy Demand and Impact Flowchart")
+plt.axis('off')
+plt.show()
+
+```
+
+## Methodology
+
+![Percent change in (a) peak discharge and (b) runoff volume and (c) difference in time-to-peak (in hours) for each scenario relative to the baseline conditions. From *Disentangling the impacts of human and environmental change on catchment response during Hurricane Harvey* by *Sebastian et al* (2019)](images/land_use_causis.jpg)
+
+## Challenges for the prospective part
+
+From *Sea Level Rise and Urban Inequality* by Hsiao (2024): 
+
++ The primary driver of increased inequality is the spatial sorting mechanism, where high-wage individuals move to flood-safe areas, driving up prices and displacing low-wage individuals into flood-prone zones.
+
++ This is very important because it highlights that static exposure assessments take only a small or even none of the widening inequalities due to climate change.
+
+- Difficulties in modeling the local responses (e.g. dikes,)
+
+
+
+## How can we model compound interactions ?
+
+![Methodology to study compound events from *Understanding and managing connected extreme events* by *Raymond et al* (2020)](images/methods_copula.png)
+
+
+## Spatial IAMs
+
+*Desmet at al.* (2018) presented a spatial dynamic model of the economy whose the main equation is:
+
+$$ u_t^i(\overline{r}_-,r) = a_t(r)[\int_0^1c_t^\omega (r)^\rho d\omega]^{\frac{1}{\rho}} \epsilon_t^i(r) \prod_{s=1}^t m(r_{s-1},r_s)^{-1} $$
+
++ $a$ is the amenities
++ $c$ the consumption
++ $\epsilon$ a location preference shock 
++ $m$ is the cost of moving
+
+It has been used for various applications : population migrations, coastal adaptation, structural changes, etc...
+
+# 2. How do compound extreme events change the land use by affecting the housing market or the agricultural sector ?
+
+## Land-use and Wildifires
+
+From *Urban Policy and Spatial Exposure to Environmental Risk* by *Ospital, Augusto* (2023):
+
+![Wildfire risk and building density in San Diego, California](images/wildfire_land_use.png)
+
+## Land-use and Wildifires
+
+From *Urban Policy and Spatial Exposure to Environmental Risk* by *Ospital, Augusto* (2023):
+
+![Damages on amenities of wildifres](images/Wildfire_damages_distance.png)
+
+
+# 3. How do these interactions affect the economic and social vulnerability of the population ?
+
+## Compound Interactions
+
+We have the following leverages:
+
++ Current Climate vs Future Climate
++ Current Land Use vs Future Land Use
++ Independent Events vs Compound Events (multiple events)
+
+
+# Additional Material
