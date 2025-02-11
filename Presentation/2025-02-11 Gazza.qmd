@@ -281,3 +281,16 @@ We have the following leverages:
 
 
 # Additional Material
+
+## Temperature Max
+
+::: {.columns}
+::: {.column width="50%"}commit
+![Natural Hazard Loss by Decile of Temperature Max in France](images/ENAFkm2_decile_tasmax.png)
+
+:::
+::: {.column width="50%"}
+![Temperature Max in France](images/temperature_max.png)
+:::
+::: <!-- end columns -->
+
