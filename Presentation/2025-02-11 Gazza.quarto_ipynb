@@ -16,7 +16,7 @@
         "      email: colin.lenoble@universite-paris-saclay.fr\n",
         "      affiliations: CIRED\n",
         "date: last-modified\n",
-        "jupyter-kernel: 'C:/Users/colin/anaconda3/envs/xarray_env/python.exe'\n",
+        "jupyter-kernel: python3\n",
         "---\n",
         "\n",
         "\n",
@@ -42,12 +42,12 @@
         "\n",
         "## Motivation in France\n",
         "\n",
-        "![Loss of natural areas per km² in France from 2010 to 2020 according to the number of natural hazard declared per km²](images/loss_natural_areas.png)\n",
+        "![Loss of natural areas per km² in France from 2010 to 2020 according to the number of natural hazard declared per km²](images/ENAFkm2_decile_catnatkm2.png)\n",
         "\n",
         "\n",
         "## Graphical Abstract\n"
       ],
-      "id": "aa199b4e"
+      "id": "3ea7faa7"
     },
     {
       "cell_type": "code",
@@ -55,7 +55,6 @@
       "source": [
         "#| label: fig-polar\n",
         "#| fig-cap: Scheme of the article\n",
-        "\n",
         "\n",
         "import matplotlib.pyplot as plt\n",
         "import networkx as nx\n",
@@ -118,7 +117,7 @@
       "source": [
         "## Climate-centered approach"
       ],
-      "id": "577cbc9f"
+      "id": "95454b0d"
     },
     {
       "cell_type": "code",
@@ -179,7 +178,7 @@
         "plt.axis('off')\n",
         "plt.show()"
       ],
-      "id": "03de07e2",
+      "id": "9ca5646c",
       "execution_count": null,
       "outputs": []
     },
@@ -191,7 +190,7 @@
         "\n",
         "## Historical perspective"
       ],
-      "id": "eb7e560a"
+      "id": "bb438a1a"
     },
     {
       "cell_type": "code",
@@ -252,7 +251,7 @@
         "plt.axis('off')\n",
         "plt.show()"
       ],
-      "id": "446c66f4",
+      "id": "9edaf6e4",
       "execution_count": null,
       "outputs": []
     },
@@ -327,14 +326,58 @@
         "::: {.columns}\n",
         "::: {.column width=\"50%\"}\n",
         "![Natural Hazard Loss by Decile of Temperature Max in France](images/ENAFkm2_decile_tasmax.png)\n",
-        "\n",
         ":::\n",
         "::: {.column width=\"50%\"}\n",
-        "![Temperature Max in France](images/temperature_max.png)\n",
+        "![Temperature Max in France](images/tasmax_France_ref.png)\n",
         ":::\n",
-        "::: <!-- end columns -->\n"
+        ":::\n",
+        "\n",
+        "## Days Above 30°C\n",
+        "\n",
+        "::: {.columns}\n",
+        "::: {.column width=\"50%\"}\n",
+        "![Natural Hazard Loss by Decile of Frequency of Days above 30°C in France](images/ENAFkm2_decile_days_above_30.png)\n",
+        ":::\n",
+        "::: {.column width=\"50%\"}\n",
+        "![Days above 30°C](images/days_above_30_France.png)\n",
+        ":::\n",
+        ":::\n",
+        "\n",
+        "\n",
+        "## Extreme Precipitation\n",
+        "\n",
+        "::: {.columns}\n",
+        "::: {.column width=\"50%\"}\n",
+        "![Natural Hazard Loss by Decile of Precipitation in France](images/ENAFkm2_decile_cum_xtrm_pr.png)\n",
+        ":::\n",
+        "::: {.column width=\"50%\"}\n",
+        "![Precipitation in France](images/Xtrm_prec_cumul_France.png)\n",
+        ":::\n",
+        ":::\n",
+        "\n",
+        "## Droughts\n",
+        "\n",
+        "::: {.columns}\n",
+        "::: {.column width=\"50%\"}\n",
+        "![Natural Hazard Loss by Decile of Droughts in France](images/ENAFkm2_decile_droughts_day.png)\n",
+        ":::\n",
+        "::: {.column width=\"50%\"}\n",
+        "![Droughts in France](images/drought_day_freq_France.png)\n",
+        ":::\n",
+        ":::\n",
+        "\n",
+        "## Wildfires\n",
+        "\n",
+        "::: {.columns}\n",
+        "::: {.column width=\"50%\"}\n",
+        "![Natural Hazard Loss by Decile of Wildfires in France](images/ENAFkm2_decile_wildfire.png)\n",
+        ":::\n",
+        "::: {.column width=\"50%\"}\n",
+        "![Wildfires in France](images/wildfire_risk_France.png)\n",
+        ":::\n",
+        ":::"
       ],
-      "id": "f601e8ad"
+      "id": "a4d61ab3"
     }
   ],
   "metadata": {
@@ -342,7 +385,7 @@
       "name": "python3",
       "language": "python",
       "display_name": "Python 3 (ipykernel)",
-      "path": "C:\\Users\\colin\\anaconda3\\envs\\xarray_env\\share\\jupyter\\kernels\\python3"
+      "path": "C:\\Users\\colin\\anaconda3\\share\\jupyter\\kernels\\python3"
     }
   },
   "nbformat": 4,

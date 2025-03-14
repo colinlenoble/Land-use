@@ -10,7 +10,7 @@ author:
       email: colin.lenoble@universite-paris-saclay.fr
       affiliations: CIRED
 date: last-modified
-jupyter-kernel: 'C:/Users/colin/anaconda3/envs/xarray_env/python.exe'
+jupyter-kernel: python3
 ---
 
 # Introduction
@@ -35,7 +35,7 @@ jupyter-kernel: 'C:/Users/colin/anaconda3/envs/xarray_env/python.exe'
 
 ## Motivation in France
 
-![Loss of natural areas per km² in France from 2010 to 2020 according to the number of natural hazard declared per km²](images/loss_natural_areas.png)
+![Loss of natural areas per km² in France from 2010 to 2020 according to the number of natural hazard declared per km²](images/ENAFkm2_decile_catnatkm2.png)
 
 
 ## Graphical Abstract
@@ -43,7 +43,6 @@ jupyter-kernel: 'C:/Users/colin/anaconda3/envs/xarray_env/python.exe'
 ```{python}
 #| label: fig-polar
 #| fig-cap: "Scheme of the article"
-
 
 import matplotlib.pyplot as plt
 import networkx as nx
@@ -285,12 +284,55 @@ We have the following leverages:
 ## Temperature Max
 
 ::: {.columns}
-::: {.column width="50%"}commit
+::: {.column width="50%"}
 ![Natural Hazard Loss by Decile of Temperature Max in France](images/ENAFkm2_decile_tasmax.png)
-
 :::
 ::: {.column width="50%"}
-![Temperature Max in France](images/temperature_max.png)
+![Temperature Max in France](images/tasmax_France_ref.png)
 :::
-::: <!-- end columns -->
+:::
 
+## Days Above 30°C
+
+::: {.columns}
+::: {.column width="50%"}
+![Natural Hazard Loss by Decile of Frequency of Days above 30°C in France](images/ENAFkm2_decile_days_above_30.png)
+:::
+::: {.column width="50%"}
+![Days above 30°C](images/days_above_30_France.png)
+:::
+:::
+
+
+## Extreme Precipitation
+
+::: {.columns}
+::: {.column width="50%"}
+![Natural Hazard Loss by Decile of Precipitation in France](images/ENAFkm2_decile_cum_xtrm_pr.png)
+:::
+::: {.column width="50%"}
+![Precipitation in France](images/Xtrm_prec_cumul_France.png)
+:::
+:::
+
+## Droughts
+
+::: {.columns}
+::: {.column width="50%"}
+![Natural Hazard Loss by Decile of Droughts in France](images/ENAFkm2_decile_droughts_day.png)
+:::
+::: {.column width="50%"}
+![Droughts in France](images/drought_day_freq_France.png)
+:::
+:::
+
+## Wildfires
+
+::: {.columns}
+::: {.column width="50%"}
+![Natural Hazard Loss by Decile of Wildfires in France](images/ENAFkm2_decile_wildfire.png)
+:::
+::: {.column width="50%"}
+![Wildfires in France](images/wildfire_risk_France.png)
+:::
+:::
