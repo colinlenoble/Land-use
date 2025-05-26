@@ -1,0 +1,46 @@
+---
+title: "Extreme Weather Events and Urbanization"
+format: html
+jupyter: true
+---
+
+# Introduction
+
+blablabla
+
+## Catnat dataset
+
+```{r}
+# if (!requireNamespace("tidyverse", quietly = TRUE)) install.packages("tidyverse")
+# if (!requireNamespace("ggplot2", quietly = TRUE)) install.packages("ggplot2")
+# if (!requireNamespace("gganimate", quietly = TRUE)) install.packages("gganimate")
+# if (!requireNamespace("gifski", quietly = TRUE)) install.packages("gifski")
+# if (!requireNamespace("ggplotify", quietly = TRUE)) install.packages("ggplotify")
+# if (!requireNamespace("fixest", quietly = TRUE)) install.packages("fixest")
+
+library(tidyverse)
+library(ggplot2)
+library(gganimate)
+library(gifski)
+library(ggplotify)
+library(fixest)
+
+df_climurb <- read.csv("../data/clim_df_panel.csv", sep = ",")
+colnames(df_climurb)
+```
+
+
+```{r}
+
+df_climurb <- df_climurb %>% drop_na()
+
+df_climurb <- df_climurb %>%
+    mutate(Disp_Inc_PPP_2015_sq = Disp_Inc_PPP_2015^2,
+                 Gini_sq = Gini^2)
+
+model <- feols(urban ~ day30 + log(Disp_Inc_PPP_2015) + log(Population) | NUTS3_ID, df_climurb)
+summary(model)
+
+
+
+```
